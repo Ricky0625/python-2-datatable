@@ -1,8 +1,7 @@
 from load_csv import load
 
-
 def main():
-    df = load("life_expectancy_years.cs")
+    df = load("life_expectancy_years.csv")
     print(df)
 
 
