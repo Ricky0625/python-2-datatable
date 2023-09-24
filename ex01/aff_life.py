@@ -10,10 +10,7 @@ def main():
     """
 
     try:
-        if len(sys.argv) != 2:
-            raise AssertionError("please provide one country name")
-
-        name = str(sys.argv[1]).capitalize()
+        name = "Malaysia"
 
         # return a data frame
         # a data frame typically have both column and row names
