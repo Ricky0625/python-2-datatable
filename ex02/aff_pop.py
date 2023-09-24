@@ -1,14 +1,19 @@
-import pandas as pd
 import matplotlib.pyplot as plt
 from load_csv import load
 
 
 def convert_abbv_to_num(abbv: str) -> int:
+
+    """
+    converts numeric abbreviation to integer.
+    for example, 4.2K to 4200
+    """
+
     NUMS_ABBV = {
-        "K": 1000,
-        "M": 100000,
-        "B": 1000000000,
-        "T": 1000000000000
+        "K": 1e3,
+        "M": 1e6,
+        "B": 1e9,
+        "T": 1e12
     }
 
     abbv_key = abbv[-1]
@@ -22,6 +27,11 @@ def convert_abbv_to_num(abbv: str) -> int:
 
 
 def main():
+
+    """
+    main
+    """
+
     try:
         df = load("population_total.csv")
 
@@ -30,7 +40,8 @@ def main():
 
         # filter data that ranges from 1800 to 2050
         filtered_df = df.loc[:, '1800':'2050']
-        
+
+        # extract all the years
         years = filtered_df.columns.astype(int)
 
         # Malaysia data
@@ -41,7 +52,8 @@ def main():
         other_country = 'France'
         other = filtered_df[df['country'] == other_country]
         other_pop_data = other.values.flatten()
-        
+
+        # plot data
         plt.plot(years, malaysia_pop_data, label='Malaysia', color='teal')
         plt.plot(years, other_pop_data, label=other_country, color='deeppink')
         plt.xlabel('Year')
