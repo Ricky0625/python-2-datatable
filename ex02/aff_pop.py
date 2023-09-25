@@ -34,7 +34,10 @@ def main():
     """
 
     try:
-        df = load("population_total.csv")
+        df = load("population_total.cs")
+
+        if df is None:
+            raise AssertionError("failed to load csv")
 
         # converts all the num abbreviation to a float number
         df.iloc[:, 1:] = df.iloc[:, 1:].map(convert_abbv_to_num)
@@ -65,7 +68,7 @@ def main():
         # customize x-axis ticks to show years at intervals of 40 years
         plt.xticks(range(min(years), max(years) + 1, 40))
 
-        # use engformatter for y-axis with no separator (e.g., "2M" for 2 million)
+        # use engformatter for y-axis with no separator ("2M" for 2 million)
         plt.gca().yaxis.set_major_formatter(EngFormatter(sep=""))
 
         # customize y-axis to start from 0 and increment by 20 million
