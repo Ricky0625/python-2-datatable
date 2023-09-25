@@ -1,5 +1,6 @@
-import matplotlib.pyplot as plt
 from load_csv import load
+import matplotlib.pyplot as plt
+from matplotlib.ticker import EngFormatter
 
 
 def convert_abbv_to_num(abbv: str) -> int:
@@ -16,10 +17,10 @@ def convert_abbv_to_num(abbv: str) -> int:
         "T": 1e12
     }
 
-    abbv_key = abbv[-1]
-    if abbv_key.isdigit():
+    if abbv.isdigit():
         return int(abbv)
 
+    abbv_key = abbv[-1]
     abbv_value = NUMS_ABBV.get(abbv_key.upper())
     if abbv_value is None:
         raise ValueError(f"unable to recognize this abbreviation: {abbv[-1]}")
@@ -53,15 +54,33 @@ def main():
         other = filtered_df[df['country'] == other_country]
         other_pop_data = other.values.flatten()
 
-        # plot data
+        max_y_axis = max(max(malaysia_pop_data), max(other_pop_data)) + 1
+
+        # plot population data for malaysia and another country
         plt.plot(years, malaysia_pop_data, label='Malaysia', color='teal')
         plt.plot(years, other_pop_data, label=other_country, color='deeppink')
         plt.xlabel('Year')
         plt.ylabel('Population')
+
+        # customize x-axis ticks to show years at intervals of 40 years
         plt.xticks(range(min(years), max(years) + 1, 40))
+
+        # use engformatter for y-axis with no separator (e.g., "2M" for 2 million)
+        plt.gca().yaxis.set_major_formatter(EngFormatter(sep=""))
+
+        # customize y-axis to start from 0 and increment by 20 million
+        plt.yticks(range(0, max_y_axis, 20_000_000))
+
+        # set plot title
         plt.title("Population Projections")
+
+        # add a legeng to distinguish between malaysia and the other country
         plt.legend()
-        plt.savefig("population_projection.png")
+
+        # show plot
+        plt.show()
+    except KeyboardInterrupt:
+        plt.close()
     except Exception as e:
         print(f"{type(e).__name__}: {e}")
 
