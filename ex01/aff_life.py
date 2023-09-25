@@ -31,8 +31,7 @@ def main():
         plt.xlabel("Year")
         plt.ylabel("Life expectancy")
         plt.title(f"{name} Life expectancy Projections")
-        # plt.show()
-        plt.savefig(f"{name}.png")
+        plt.show()
     except AssertionError as e:
         print(f"[ERROR]: {e}")
     except Exception as e:
