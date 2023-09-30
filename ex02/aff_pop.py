@@ -11,12 +11,13 @@ def convert_abbv_to_num(abbv: str) -> int:
     """
 
     NUMS_ABBV = {
-        "K": 1e3,
-        "M": 1e6,
-        "B": 1e9,
-        "T": 1e12
+        "K": 1000,
+        "M": 1_000_000,
+        "B": 1_000_000_000,
+        "T": 1_000_000_000_000,
     }
 
+    # if str only consists of digits, meaning it's not a numeric abbreviation
     if abbv.isdigit():
         return int(abbv)
 
@@ -34,11 +35,13 @@ def main():
     """
 
     try:
-        df = load("population_total.cs")
+        df = load("../files/population_total.csv")
 
         if df is None:
             raise AssertionError("failed to load csv")
 
+        # iloc[row_indices, col_indices]
+        # iloc is used for integer-based indexing of rows and columns in df
         # converts all the num abbreviation to a float number
         df.iloc[:, 1:] = df.iloc[:, 1:].map(convert_abbv_to_num)
 
@@ -57,6 +60,7 @@ def main():
         other = filtered_df[df['country'] == other_country]
         other_pop_data = other.values.flatten()
 
+        # get the max y-axis value
         max_y_axis = max(max(malaysia_pop_data), max(other_pop_data)) + 1
 
         # plot population data for malaysia and another country
@@ -77,8 +81,8 @@ def main():
         # set plot title
         plt.title("Population Projections")
 
-        # add a legeng to distinguish between malaysia and the other country
-        plt.legend()
+        # add a legend to distinguish between malaysia and the other country
+        plt.legend(loc="lower right")
 
         # show plot
         plt.show()
