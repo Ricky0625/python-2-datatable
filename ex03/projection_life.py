@@ -11,8 +11,9 @@ def main():
 
     try:
         # load datasets
-        life_expectancy_df = load("life_expectancy_years.csv")
+        life_expectancy_df = load("../files/life_expectancy_years.csv")
         income_inflation_df = load(
+            "../files/" +
             "income_per_person_gdppercapita_ppp_inflation_adjusted.csv"
             )
 

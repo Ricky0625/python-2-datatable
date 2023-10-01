@@ -43,7 +43,7 @@ def main():
         # iloc[row_indices, col_indices]
         # iloc is used for integer-based indexing of rows and columns in df
         # converts all the num abbreviation to a float number
-        df.iloc[:, 1:] = df.iloc[:, 1:].map(convert_abbv_to_num)
+        df.iloc[1:, 1:] = df.iloc[1:, 1:].map(convert_abbv_to_num)
 
         # filter data that ranges from 1800 to 2050
         filtered_df = df.loc[:, '1800':'2050']

@@ -42,6 +42,8 @@ def main():
         plt.ylabel("Life expectancy")
         plt.title(f"{name} Life expectancy Projections")
         plt.show()
+    except KeyboardInterrupt:
+        plt.close()
     except AssertionError as e:
         print(f"[ERROR]: {e}")
     except Exception as e:
